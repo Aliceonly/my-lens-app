@@ -1,18 +1,36 @@
-// import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
-// import {PublicationSortCriteria, useExplorePublicationsQuery} from "../graphql/generated";
-// import useLogin from "../lib/auth/useLogin"
-import { Sign } from "crypto"
-import SignInButton from "../components/SignInButton"
+import FeedPost from "../components/FeedPost"
+import styles from "../styles/Home.module.css";
+import {
+  PublicationSortCriteria,
+  useExplorePublicationsQuery,
+} from "../graphql/generated";
 
 export default function Home() {
-    // const address = useAddress();
-    // const {mutate:requestLogin} = useLogin()
+  const { isLoading, error, data } = useExplorePublicationsQuery({
+    request: {
+      sortCriteria: PublicationSortCriteria.TopCollected,
+    },
+  }, {
+    //禁止自动refetch页面
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false
+  });
 
-    // if (!address) {
-    //     return(<ConnectWallet/>)
-    // }
-    
-    
-    // return <button onClick={() => requestLogin()}>Login</button>;
-    return <SignInButton />;
+  if (error) {
+    return <div className={styles.container}>Error</div>;
+  }
+
+  if (isLoading) {
+    return <div className={styles.container}>Loading</div>;
+  }
+
+    return (
+      <div className={styles.container}>
+        <div className={styles.postContainer}>
+          {data?.explorePublications.items.map((publication) => (
+            <FeedPost publication={publication} key={publication.id} />
+          ))}
+        </div>
+      </div>
+    );
 }
