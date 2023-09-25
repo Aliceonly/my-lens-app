@@ -1,6 +1,7 @@
 import FeedPost from "../components/FeedPost"
 import styles from "../styles/Home.module.css";
 import {
+  PublicationMainFocus,
   PublicationSortCriteria,
   useExplorePublicationsQuery,
 } from "../graphql/generated";
@@ -8,7 +9,10 @@ import {
 export default function Home() {
   const { isLoading, error, data } = useExplorePublicationsQuery({
     request: {
-      sortCriteria: PublicationSortCriteria.TopCollected,
+      sortCriteria: PublicationSortCriteria.Latest,
+      metadata: {
+        // mainContentFocus: PublicationMainFocus.
+      }
     },
   }, {
     //禁止自动refetch页面

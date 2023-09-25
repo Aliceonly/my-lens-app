@@ -34,7 +34,7 @@ export default function useLogin() {
       },
     });
       
-      console.log("Authenticated:", authenticate);
+    console.log("Authenticated:", authenticate);
       
     //4.接收access token from lens api
     const { accessToken, refreshToken } = authenticate;

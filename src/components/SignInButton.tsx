@@ -4,6 +4,7 @@ import {
   useNetwork,
   ChainId,
   ConnectWallet,
+  MediaRenderer,
 } from "@thirdweb-dev/react";
 import React from "react";
 import useLensUser from "../lib/auth/useLensUser";
@@ -51,7 +52,20 @@ const SignInButton = ({}: Props) => {
   }
 
   if (profileQuery.data?.defaultProfile) {
-    return <div>Hello {profileQuery.data?.defaultProfile?.handle}!</div>;
+    return (
+      <div>
+        <MediaRenderer
+          // @ts-ignore
+          src={profileQuery?.data?.defaultProfile?.picture?.original?.url || ""}
+          alt={profileQuery.data.defaultProfile.name || ""}
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: "50%",
+          }}
+        />
+      </div>
+    );
   }
 
   return <div>Something went wrong</div>;
