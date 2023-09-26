@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+传统的web2社交平台搭建Application with database交互
 
-## Getting Started
+web3 分离了database, apps 通过lens protocol从blockchain拉取数据，意味着用户own the piece of data
 
-First, run the development server:
+两个本质区别：data ownership && 任何人可以访问建立在数据之上的lens提供的社交图谱
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+lens profile nft collection存储了posts made &  
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+frontend tech
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+nextJs - vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+graphQL
 
-## Deploy on Vercel
+React Query
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+thirdweb
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+Application：
+
+1.连接钱包
+
+2.读写信息 user wallets（余额，钱包地址，网络，签名）交易 & 消息
+
+3.读写交易 合约 & 链
+
+![image-20230924153246932](https://gitee.com/dengdengnc/drawingbed/raw/master/img/image-20230924153246932.png)
+
+
+
+### 登录到lens
+
+![image-20230924163630424](https://gitee.com/dengdengnc/drawingbed/raw/master/img/image-20230924163630424.png)
+
+tanstack query to get lens-user information in localstorage and detect invalidation
+
+graphql codegen(custom fetcher func) fetcher to get profile from lens api
+
+use useExplorePublicationsQuery hook to load feed page information
+
+NextJs dynamic router to grab id and use generated hook to query and load profile page
+
+follow user : creating message follows ERC-712(send bytes,user sign)
+
+broadcast transaction:lens relay a wallet and pay for the gas cost
+
+dispatcher(delegate signing privileges):
+
+ - intermediate wallet acts as sign-off for every transaction
+	- Optimistic
+
+use omit-deep to remove type name from each levels of nesting inside object
+
+createPost: use useStorageUpload hook to upload to ipfs
+
+use useCreatePostTypedDataMutation hook 请求lens创建post的typed data
+
+封装signTypedDataWithOmittedTypename签名函数创造ERC712签名
+
+解构TypedData调用postWithSig发送交易到智能合约
