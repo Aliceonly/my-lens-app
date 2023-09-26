@@ -1,9 +1,12 @@
+Run at https://my-lens-5ilpflh7a-aliceonly.vercel.app/
+
 传统的web2社交平台搭建Application with database交互
 
 web3 分离了database, apps 通过lens protocol从blockchain拉取数据，意味着用户own the piece of data
 
 两个本质区别：data ownership && 任何人可以访问建立在数据之上的lens提供的社交图谱
 
+using Lens Protocol, thirdweb Next.js, Tanstack Query, and GraphQL Codegen
 
 
 lens profile nft collection存储了posts made &  
