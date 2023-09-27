@@ -62,6 +62,14 @@ use omit-deep to remove type name from each levels of nesting inside object
 
 createPost: use useStorageUpload hook to upload to ipfs
 
+使用graphql codegen(custom fetcher func) fetcher 从lens api获取 profile
+使用tanstack query获取lens-user 信息，存储到localStorage，并detect invalidation
+使用useExplorePublicationsQuery hook加载 feed page information
+使用NextJs dynamic router to grab id and use generated hook to query and load profile page
+封装signTypedDataWithOmittedTypename签名函数，遵循ERC-712创造message签名
+使用dispatcher代理signing privileges
+解构TypedData调用postWithSig发送交易到智能合约
+
 use useCreatePostTypedDataMutation hook 请求lens创建post的typed data
 
 封装signTypedDataWithOmittedTypename签名函数创造ERC712签名
